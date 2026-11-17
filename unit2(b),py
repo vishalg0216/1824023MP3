@@ -1,0 +1,38 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+n_values = range(2, 21)
+
+laguerre_error = []
+hermite_error = []
+
+for n in n_values:
+
+    x, w = np.polynomial.laguerre.laggauss(n)
+    result1 = sum(w * x**2)
+
+    exact1 = 2
+    laguerre_error.append(abs(result1 - exact1))
+
+    x, w = np.polynomial.hermite.hermgauss(n)
+    result2 = sum(w * x**2)
+
+    exact2 = math.sqrt(math.pi) / 2
+    hermite_error.append(abs(result2 - exact2))
+
+print("Gauss Laguerre Result:", result1)
+print("Gauss Hermite Result:", result2)
+
+print("Exact Laguerre Result:", exact1)
+print("Exact Hermite Result:", exact2)
+
+plt.plot(n_values, laguerre_error, 'o-', label="Gauss Laguerre")
+plt.plot(n_values, hermite_error, 's-', label="Gauss Hermite")
+
+plt.xlabel("Number of Points")
+plt.ylabel("Absolute Error")
+plt.title("Convergence of Gauss Quadrature")
+plt.legend()
+plt.grid()
+plt.show()
